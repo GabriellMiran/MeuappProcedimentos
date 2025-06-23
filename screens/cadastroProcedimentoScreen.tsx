@@ -3,23 +3,25 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, KeyboardAvoidingVi
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as SecureStore from 'expo-secure-store';
 import NetInfo from '@react-native-community/netinfo';
-import axios from 'axios';
 import { Snackbar, Provider as PaperProvider } from 'react-native-paper';
 import api from '../services/api';
 import { useIsFocused } from '@react-navigation/native';
+import { Picker } from '@react-native-picker/picker';
+import { procedimentosDisponiveis as listaPadraoProcedimentos } from '../screens/data/procedimento';
 
 export default function CadastroProcedimentoScreen() {
   const [idPaciente, setIdPaciente] = useState('');
   const [nomePaciente, setNomePaciente] = useState('');
   const [idProfissional, setIdProfissional] = useState('');
   const [idProcedimento, setIdProcedimento] = useState('');
-  const [nomeProcedimento, setNomeProcedimento] = useState('');
   const [idUsuario, setIdUsuario] = useState('');
   const [motivoNegacao, setMotivoNegacao] = useState('');
   const [temPendencias, setTemPendencias] = useState(false);
   const [snackbarVisible, setSnackbarVisible] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
   const [snackbarType, setSnackbarType] = useState<'info' | 'error' | 'success'>('info');
+  const [procedimentosDisponiveis, setProcedimentosDisponiveis] = useState([]);
+  
 
   const isFocused = useIsFocused();
 
@@ -89,21 +91,8 @@ export default function CadastroProcedimentoScreen() {
   }, [idPaciente]);
 
   useEffect(() => {
-    const buscarNomeProcedimento = async () => {
-      if (!idProcedimento) {
-        setNomeProcedimento('');
-        return;
-      }
-      try {
-        const response = await api.get(`/procedimento/${idProcedimento}`);
-        setNomeProcedimento(response.data.nome);
-      } catch (error) {
-        console.error('Erro ao buscar nome do procedimento:', error);
-        setNomeProcedimento('Procedimento não encontrado');
-      }
-    };
-    buscarNomeProcedimento();
-  }, [idProcedimento]);
+  setProcedimentosDisponiveis(listaPadraoProcedimentos);
+}, []);
 
   const showSnackbar = (message: string, type: 'info' | 'error' | 'success') => {
     setSnackbarMessage(message);
@@ -116,7 +105,6 @@ export default function CadastroProcedimentoScreen() {
     setIdProcedimento('');
     setMotivoNegacao('');
     setNomePaciente('');
-    setNomeProcedimento('');
   };
 
   const handleSalvar = async () => {
@@ -199,20 +187,18 @@ export default function CadastroProcedimentoScreen() {
             editable={false}
           />
 
-          <Text style={styles.label}>ID do Procedimento</Text>
-          <TextInput
-            style={styles.input}
-            keyboardType="numeric"
-            value={idProcedimento}
-            onChangeText={setIdProcedimento}
-          />
-
-          <Text style={styles.label}>Nome do Procedimento</Text>
-          <TextInput
-            style={[styles.input, { backgroundColor: '#eee' }]}
-            value={nomeProcedimento}
-            editable={false}
-          />
+          <Text style={styles.label}>Procedimento</Text>
+          <View style={styles.input}>
+            <Picker
+              selectedValue={idProcedimento}
+              onValueChange={(itemValue) => setIdProcedimento(itemValue)}
+            >
+              <Picker.Item label="Selecione um procedimento" value="" />
+              {procedimentosDisponiveis.map((proc) => (
+                <Picker.Item key={proc.IDPROCED} label={proc.DESCRPROC} value={proc.IDPROCED.toString()} />
+              ))}
+            </Picker>
+          </View>
 
           <TouchableOpacity style={styles.button} onPress={handleSalvar}>
             <Text style={styles.buttonText}>Salvar Procedimento</Text>

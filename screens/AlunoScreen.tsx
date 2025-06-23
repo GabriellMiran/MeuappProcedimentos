@@ -90,7 +90,6 @@ export default function AlunoScreen() {
   }
 };
 
-
   useEffect(() => {
     if (isFocused) {
       console.log('Tela Aluno está focada, carregando procedimentos...');

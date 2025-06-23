@@ -50,20 +50,24 @@ export default function LoginScreen({ setRole }) {
       <ScrollView contentContainerStyle={styles.scroll}>
         <Image source={require('../assets/logo.png')} style={styles.logo} />
         <Text style={styles.title}>Login</Text>
-        <TextInput
-          placeholder="Email de login"
-          value={login}
-          onChangeText={setLogin}
-          style={styles.input}
-          keyboardType="email-address"
-        />
-        <TextInput
-          placeholder="Senha"
-          value={senha}
-          onChangeText={setSenha}
-          style={styles.input}
-          secureTextEntry
-        />
+      
+<Text style={styles.label}>CPF</Text>
+<TextInput
+  value={login}
+  onChangeText={setLogin}
+  style={styles.input}
+  keyboardType="numeric"
+  placeholder=""
+/>
+
+
+<Text style={styles.label}>Senha</Text>
+<TextInput
+  value={senha}
+  onChangeText={setSenha}
+  style={styles.input}
+  secureTextEntry
+/>
         <TouchableOpacity style={styles.button} onPress={handleLogin}>
           <Text style={styles.buttonText}>Entrar</Text>
         </TouchableOpacity>
@@ -87,4 +91,12 @@ const styles = StyleSheet.create({
   buttonText: {
     color: '#fff', textAlign: 'center', fontWeight: 'bold',
   },
+  
+ label: {
+  fontWeight: 'bold',
+  alignSelf: 'flex-start',
+  marginBottom: 4,
+  fontSize: 16,
+  color: '#333',
+},
 });
