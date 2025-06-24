@@ -50,16 +50,13 @@ export default function LoginScreen({ setRole }) {
       <ScrollView contentContainerStyle={styles.scroll}>
         <Image source={require('../assets/logo.png')} style={styles.logo} />
         <Text style={styles.title}>Login</Text>
-      
-<Text style={styles.label}>CPF</Text>
+        <Text style={styles.label}>Email</Text>
 <TextInput
   value={login}
   onChangeText={setLogin}
   style={styles.input}
-  keyboardType="numeric"
-  placeholder=""
+  keyboardType="email-address"
 />
-
 
 <Text style={styles.label}>Senha</Text>
 <TextInput
