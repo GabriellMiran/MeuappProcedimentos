@@ -29,7 +29,7 @@ export default function LoginScreen({ setRole }) {
 
     const { tipo, idProfissional, idUsuario } = response.data;
 
-    // ⚠️ Salvar todos os dados necessários
+    
     await SecureStore.setItemAsync('role', tipo);
     await SecureStore.setItemAsync('idProfissional', String(idProfissional));
     await SecureStore.setItemAsync('idUsuario', String(idUsuario)); // novo
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
   title: { fontSize: 24, marginBottom: 20, textAlign: 'center' },
   input: {
     borderWidth: 1, borderColor: '#ccc', borderRadius: 8,
-    padding: 10, marginBottom: 12, width: '100%',
+    padding: 10, marginBottom: 12, width: '100%', color: '#000'
   },
   button: {
     backgroundColor: '#4CAF50', padding: 12, borderRadius: 8, width: '100%',

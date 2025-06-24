@@ -15,7 +15,7 @@ export default function App() {
 
   useEffect(() => {
     const loadRole = async () => {
-      await SecureStore.deleteItemAsync('role'); // <- apenas para testes
+      await SecureStore.deleteItemAsync('role'); 
       setRole(null);
       setIsLoading(false);
     };
@@ -46,7 +46,7 @@ export default function App() {
         </Stack.Navigator>
       </NavigationContainer>
 
-      {/* ✅ Importante: o Toast deve estar aqui */}
+     
       
     </>
   );

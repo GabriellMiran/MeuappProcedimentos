@@ -2,13 +2,13 @@ const db = require('../database/mysql');
 const procedimentoModel = require('../models/procedimentoModel');
 
 
-// Função para verificar se um registro existe em uma tabela
+
 const verificarExistencia = async (tabela, campo, valor) => {
   const [rows] = await db.query(`SELECT 1 FROM ${tabela} WHERE ${campo} = ?`, [valor]);
   return rows.length > 0;
 };
 
-// 📌 Função para cadastrar procedimento
+
 const cadastrarProcedimento = async (req, res) => {
   try {
     const {
@@ -21,7 +21,7 @@ const cadastrarProcedimento = async (req, res) => {
 
     console.log('Recebido POST /procedimentos com dados:', req.body);
 
-    // Validação
+  
     const erros = {};
 
     if (!await verificarExistencia('PACIENTE', 'IDPACIENTE', ID_PACIENTE)) {
@@ -44,7 +44,7 @@ const cadastrarProcedimento = async (req, res) => {
       return res.status(400).json({ erros });
     }
 
-    // Ajuste da data
+ 
     const now = new Date();
     now.setHours(now.getHours() - 4);
     const DATASOL = now.toISOString().slice(0, 19).replace('T', ' ');
@@ -72,7 +72,7 @@ const cadastrarProcedimento = async (req, res) => {
   }
 };
 
-// 📌 Função para listar procedimentos
+
 const listarProcedimentos = async (req, res) => {
   try {
     const [result] = await db.query(`
@@ -102,7 +102,7 @@ const listarProcedimentos = async (req, res) => {
   }
 };
 
-// 📌 Função para atualizar status do procedimento
+
 const atualizarStatusProcedimento = async (req, res) => {
   const { id } = req.params;
   const { status, MOTNEG } = req.body;

@@ -103,7 +103,6 @@ export const procedimentosDisponiveis = [
 { IDPROCED: 823, DESCRPROC: 'Fratura luxação de esterno ou costela - redução incruenta' },
 { IDPROCED: 824, DESCRPROC: 'Fratura luxação de esterno ou costela - tratamento cirúrgico' },
 { IDPROCED: 829, DESCRPROC: 'Ressutura de parede torácica' },
-{ IDPROCED: 852, DESCRPROC: 'Reconstrução da placa aréolo mamilar - unilateral' },
 { IDPROCED: 865, DESCRPROC: 'Mamoplastia feminina (com ou sem uso de implantes mamários) pós-bariátrica' },
 { IDPROCED: 938, DESCRPROC: 'Reimplante de segmentos distais do membro superior, com ressecção segmentar' },
 { IDPROCED: 939, DESCRPROC: 'Reimplante do membro inferior do nível médio proximal da perna até a coxa' },

@@ -99,7 +99,7 @@ export default function SupervisorScreen() {
         ))}
       </ScrollView>
 
-      {/* Modal para motivo da recusa */}
+      
       <Modal visible={showModal} transparent animationType="slide">
         <View style={styles.modalOverlay}>
           <View style={styles.modalContainer}>
@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
   botaoRecusar: { backgroundColor: '#F44336', padding: 10, borderRadius: 5 },
   textoBotao: { color: '#fff', fontWeight: 'bold', textAlign: 'center' },
 
-  // Modal
+
   modalOverlay: {
     flex: 1,
     backgroundColor: 'rgba(0,0,0,0.5)',

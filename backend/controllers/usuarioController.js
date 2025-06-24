@@ -28,7 +28,7 @@ const loginUsuario = async (req, res) => {
 
     const { IDUSUARIO, SENHAUSUA, ID_PROFISSIO, TIPOPROFI, ID_CONSEPROFI } = rows[0];
 
-    // ❌ Bloqueia se não for da Odontologia
+  
     if (ID_CONSEPROFI !== 61) {
       console.log('⚠️ Usuário não é da Odontologia (ID_CONSEPROFI =', ID_CONSEPROFI, ')');
       return res.status(403).json({ error: 'Acesso restrito aos profissionais de Odontologia' });

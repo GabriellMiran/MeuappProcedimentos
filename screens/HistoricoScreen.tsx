@@ -15,7 +15,7 @@ interface Procedimento {
   codigoProcedimento: string;
   nomePaciente: string;
   status: string;
-  motivoNegacao: string; // <-- novo campo opcional
+  motivoNegacao: string; 
 }
 
 export default function HistoricoScreen() {
@@ -25,7 +25,7 @@ export default function HistoricoScreen() {
   const carregarHistorico = () => {
     api.get('/soliodonto')
       .then(res => {
-        setLista(res.data); // Agora inclui todos os status
+        setLista(res.data); 
       })
       .catch(err => {
         console.error(err);

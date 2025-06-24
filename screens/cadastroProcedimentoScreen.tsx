@@ -190,13 +190,14 @@ export default function CadastroProcedimentoScreen() {
           <Text style={styles.label}>Procedimento</Text>
           <View style={styles.input}>
             <Picker
-              selectedValue={idProcedimento}
-              onValueChange={(itemValue) => setIdProcedimento(itemValue)}
+            selectedValue={idProcedimento}
+            onValueChange={(itemValue) => setIdProcedimento(itemValue)}
+            style={{ color: '#000' }}
             >
-              <Picker.Item label="Selecione um procedimento" value="" />
-              {procedimentosDisponiveis.map((proc) => (
-                <Picker.Item key={proc.IDPROCED} label={proc.DESCRPROC} value={proc.IDPROCED.toString()} />
-              ))}
+            <Picker.Item label="Selecione um procedimento" value="" />
+            {procedimentosDisponiveis.map((proc) => (
+            <Picker.Item key={proc.IDPROCED} label={proc.DESCRPROC} value={proc.IDPROCED.toString()} />
+           ))}
             </Picker>
           </View>
 

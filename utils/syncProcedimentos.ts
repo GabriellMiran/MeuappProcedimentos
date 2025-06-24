@@ -3,10 +3,10 @@ import NetInfo from '@react-native-community/netinfo';
 import axios from 'axios';
 import api from '../services/api';
 
-// Sincroniza os procedimentos salvos localmente com o backend
+
 export const sincronizarProcedimentos = async () => {
   try {
-    // Verifica se a conexão com a internet está ativa
+    
     const netInfo = await NetInfo.fetch();
 
     if (netInfo.isConnected) {
@@ -21,7 +21,7 @@ export const sincronizarProcedimentos = async () => {
       
       for (const procedimento of procedimentos) {
         try {
-          // Envia o procedimento para o backend
+        
           const response = await api.post('/procedimentos', procedimento);
           
           if (response.status === 200) {
@@ -34,7 +34,7 @@ export const sincronizarProcedimentos = async () => {
         }
       }
 
-      // Remove os procedimentos após sincronizar
+     
       await AsyncStorage.removeItem('procedimentosOffline');
       console.log('Todos os procedimentos foram sincronizados com sucesso!');
     } else {
