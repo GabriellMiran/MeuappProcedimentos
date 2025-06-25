@@ -14,13 +14,20 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const loadRole = async () => {
-      await SecureStore.deleteItemAsync('role'); 
-      setRole(null);
+  const loadRole = async () => {
+    try {
+      const savedRole = await SecureStore.getItemAsync('role');
+      if (savedRole) {
+        setRole(savedRole); 
+      }
+    } catch (error) {
+      console.error('Erro ao carregar login salvo:', error);
+    } finally {
       setIsLoading(false);
-    };
-    loadRole();
-  }, []);
+    }
+  };
+  loadRole();
+}, []);
 
   if (isLoading) {
     return (

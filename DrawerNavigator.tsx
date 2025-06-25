@@ -19,9 +19,9 @@ export default function AppDrawer({ userRole, setRole }: AppDrawerProps) {
   return (
     <Drawer.Navigator
       screenOptions={{
-        headerStyle: { backgroundColor: '#006400' }, // verde escuro
+        headerStyle: { backgroundColor: '#02A450' }, // verde escuro
         headerTintColor: '#fff',
-        drawerActiveBackgroundColor: '#228B22', // verde médio
+        drawerActiveBackgroundColor: '#02A450', // verde médio
         drawerActiveTintColor: '#fff',
         drawerInactiveTintColor: '#006400',
         drawerStyle: {
@@ -47,12 +47,20 @@ export default function AppDrawer({ userRole, setRole }: AppDrawerProps) {
 }
 
 function CustomDrawerContent(props: any) {
-  const { setRole } = props; // recebendo do componente principal
+  const { setRole } = props; 
 
   const handleLogout = async () => {
+  try {
     await SecureStore.deleteItemAsync('role');
-    setRole(null);
-  };
+    await SecureStore.deleteItemAsync('idProfissional');
+    await SecureStore.deleteItemAsync('idUsuario');
+    setRole(null); 
+  } catch (error) {
+    Alert.alert('Erro', 'Não foi possível sair da conta.');
+    console.error('Erro ao fazer logout:', error);
+  }
+};
+
 
   return (
     <DrawerContentScrollView {...props} contentContainerStyle={{ flex: 1 }}>
@@ -81,7 +89,7 @@ const styles = StyleSheet.create({
   drawerHeader: {
     alignItems: 'center',
     paddingVertical: 20,
-     // verde escuro
+    
   },
   logo: {
     width: 150,

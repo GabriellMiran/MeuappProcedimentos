@@ -76,14 +76,14 @@ export default function LoginScreen({ setRole }) {
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#fff' },
   scroll: { flexGrow: 1, justifyContent: 'center', alignItems: 'center', padding: 20 },
-  logo: { width: 400, height: 200, resizeMode: 'contain', marginBottom: 10 },
+  logo: { width: 400, height: 300, resizeMode: 'contain', marginBottom: 10 },
   title: { fontSize: 24, marginBottom: 20, textAlign: 'center' },
   input: {
     borderWidth: 1, borderColor: '#ccc', borderRadius: 8,
     padding: 10, marginBottom: 12, width: '100%', color: '#000'
   },
   button: {
-    backgroundColor: '#4CAF50', padding: 12, borderRadius: 8, width: '100%',
+    backgroundColor: '#02A450', padding: 12, borderRadius: 8, width: '100%',
   },
   buttonText: {
     color: '#fff', textAlign: 'center', fontWeight: 'bold',

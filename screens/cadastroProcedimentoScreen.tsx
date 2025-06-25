@@ -242,7 +242,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 24,
     fontWeight: 'bold',
-    color: '#007e33',
+    color: '#02A450',
   },
   input: {
     backgroundColor: '#fff',
@@ -258,7 +258,7 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   button: {
-    backgroundColor: '#007e33',
+    backgroundColor: '#02A450',
     paddingVertical: 14,
     borderRadius: 12,
     marginTop: 8,
