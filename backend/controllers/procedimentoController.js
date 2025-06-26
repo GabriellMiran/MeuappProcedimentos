@@ -199,6 +199,29 @@ const listarProcedimentosDoAluno = async (req, res) => {
   }
 };
 
+const listarEspecProc = async (req, res) => {
+  try {
+    const [rows] = await db.query(`
+      SELECT 
+        ep.IDESPECPROCED,
+        ep.ID_ESPEC,
+        e.DESCESPEC,
+        ep.ID_PROCED,
+        p.DESCRPROC,
+        p.VALORPROC
+      FROM ESPECPROCED ep
+      JOIN ESPECIALIDADE e ON ep.ID_ESPEC = e.IDESPEC
+      JOIN PROCEDIMENTO p ON ep.ID_PROCED = p.IDPROCED
+	    WHERE ep.ID_ESPEC = 4;
+    `);
+
+    res.json(rows);
+  } catch (error) {
+    console.error("Erro ao buscar especproc:", error);
+    res.status(500).json({ message: "Erro interno" });
+  }
+};
+
 module.exports = {
   cadastrarProcedimento,
   listarProcedimentos,
@@ -206,4 +229,5 @@ module.exports = {
   buscarNomePaciente,
   obterNomeProcedimento,
   listarProcedimentosDoAluno,
+  listarEspecProc
 };

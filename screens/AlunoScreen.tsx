@@ -7,6 +7,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../Type';
 import api from '../services/api';
 import * as SecureStore from 'expo-secure-store';
+import { salvarEspecProcLocalmente } from '../services/storage';
 
 type AlunoNavProp = NativeStackNavigationProp<RootStackParamList, 'Aluno'>;
 
@@ -96,6 +97,16 @@ export default function AlunoScreen() {
       carregarProcedimentos();
     }
   }, [isFocused]);
+
+  useEffect(() => {
+  const carregarProcedimentos = async () => {
+    const state = await NetInfo.fetch();
+    if (state.isConnected) {
+      await salvarEspecProcLocalmente(); 
+    }
+  };
+  carregarProcedimentos();
+}, []);
 
   const traduzirStatus = (status: 'P' | 'A' | 'N') => {
     switch (status) {

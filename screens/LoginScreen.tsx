@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 import * as SecureStore from 'expo-secure-store';
 import api from '../services/api';
+import { salvarEspecProcLocalmente, obterEspecProcDoCache } from '../services/storage';
 
 
 
@@ -34,13 +35,14 @@ export default function LoginScreen({ setRole }) {
     await SecureStore.setItemAsync('idProfissional', String(idProfissional));
     await SecureStore.setItemAsync('idUsuario', String(idUsuario)); // novo
 
+    await salvarEspecProcLocalmente();
+
     setRole(tipo);
   } catch (error) {
     console.error('Erro de login:', error);
     Alert.alert('Erro', 'Credenciais inválidas ou erro na conexão.');
   }
 };
-
 
   return (
     <KeyboardAvoidingView
@@ -50,12 +52,14 @@ export default function LoginScreen({ setRole }) {
       <ScrollView contentContainerStyle={styles.scroll}>
         <Image source={require('../assets/logo.png')} style={styles.logo} />
         <Text style={styles.title}>Login</Text>
-        <Text style={styles.label}>Email</Text>
+        
+<Text style={styles.label}>CPF</Text>
 <TextInput
   value={login}
   onChangeText={setLogin}
   style={styles.input}
-  keyboardType="email-address"
+  keyboardType="numeric"
+  placeholder=""
 />
 
 <Text style={styles.label}>Senha</Text>

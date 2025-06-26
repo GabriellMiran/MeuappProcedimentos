@@ -8,6 +8,7 @@ import api from '../services/api';
 import { useIsFocused } from '@react-navigation/native';
 import { Picker } from '@react-native-picker/picker';
 import { procedimentosDisponiveis as listaPadraoProcedimentos } from '../screens/data/procedimento';
+import { salvarEspecProcLocalmente, obterEspecProcDoCache } from '../services/storage';
 
 export default function CadastroProcedimentoScreen() {
   const [idPaciente, setIdPaciente] = useState('');
@@ -91,7 +92,17 @@ export default function CadastroProcedimentoScreen() {
   }, [idPaciente]);
 
   useEffect(() => {
-  setProcedimentosDisponiveis(listaPadraoProcedimentos);
+  const carregarProcedimentos = async () => {
+    const state = await NetInfo.fetch();
+    let dados: any[] = [];
+    if (state.isConnected) {
+      dados = await salvarEspecProcLocalmente(); 
+    } else {
+      dados = await obterEspecProcDoCache(); 
+    }
+    setProcedimentosDisponiveis(dados);
+  };
+  carregarProcedimentos();
 }, []);
 
   const showSnackbar = (message: string, type: 'info' | 'error' | 'success') => {
@@ -196,7 +207,11 @@ export default function CadastroProcedimentoScreen() {
             >
             <Picker.Item label="Selecione um procedimento" value="" />
             {procedimentosDisponiveis.map((proc) => (
-            <Picker.Item key={proc.IDPROCED} label={proc.DESCRPROC} value={proc.IDPROCED.toString()} />
+            <Picker.Item
+            key={proc.ID_PROCED}
+            label={proc.DESCRPROC}
+            value={proc.ID_PROCED.toString()}
+             />
            ))}
             </Picker>
           </View>

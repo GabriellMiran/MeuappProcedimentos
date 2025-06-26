@@ -10,6 +10,8 @@ import {
 } from 'react-native';
 import axios from 'axios';
 import api from '../services/api';
+import NetInfo from '@react-native-community/netinfo';
+import { salvarEspecProcLocalmente } from '../services/storage';
 
 interface Procedimento {
   id: number;
@@ -74,6 +76,16 @@ export default function SupervisorScreen() {
   useEffect(() => {
     fetchProcedimentos();
   }, []);
+
+  useEffect(() => {
+  const carregarProcedimentos = async () => {
+    const state = await NetInfo.fetch();
+    if (state.isConnected) {
+      await salvarEspecProcLocalmente(); 
+    }
+  };
+  carregarProcedimentos();
+}, []);
 
   return (
     <>

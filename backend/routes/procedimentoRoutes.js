@@ -10,5 +10,6 @@ router.patch('/soliodonto/:id/status', procedimentoController.atualizarStatusPro
 router.get('/paciente/:id', procedimentoController.buscarNomePaciente);
 router.get('/procedimento/:id', procedimentoController.obterNomeProcedimento);
 router.get('/soliodonto/aluno', procedimentoController.listarProcedimentosDoAluno);
+router.get('/especproc', procedimentoController.listarEspecProc);
 
 module.exports = router;

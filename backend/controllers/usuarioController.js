@@ -7,38 +7,35 @@ const loginUsuario = async (req, res) => {
   try {
     console.log('📥 Requisição recebida com:', { login, senha });
 
-    const [rows] = await db.query(
-  `SELECT 
-    u.IDUSUARIO,
-    u.SENHAUSUA,
-    u.ID_PROFISSIO,
-    p.TIPOPROFI,
-    p.ID_CONSEPROFI
-  FROM USUARIO u
-  JOIN PROFISSIONAL p ON u.ID_PROFISSIO = p.IDPROFISSIO
-  WHERE u.LOGUSUARIO = ?`,
-  [login]
-);
+    const [rows] = await db.query(`
+      SELECT 
+        u.IDUSUARIO,
+        u.SENHAUSUA,
+        u.ID_PROFISSIO,
+        p.TIPOPROFI,
+        p.ID_CONSEPROFI,
+        pf.CPFPESSOA
+      FROM USUARIO u
+      JOIN PROFISSIONAL p ON u.ID_PROFISSIO = p.IDPROFISSIO
+      JOIN PESSOAFIS pf ON p.ID_PESSOAFIS = pf.IDPESSOAFIS
+      WHERE pf.CPFPESSOA = ?
+    `, [login]);
+
     console.log('📦 Resultado da query:', rows);
 
     if (rows.length === 0) {
-      console.log('❌ Usuário não encontrado');
-      return res.status(401).json({ error: 'Usuário não encontrado' });
+      console.log('❌ CPF não encontrado');
+      return res.status(401).json({ error: 'CPF não encontrado' });
     }
 
     const { IDUSUARIO, SENHAUSUA, ID_PROFISSIO, TIPOPROFI, ID_CONSEPROFI } = rows[0];
 
-  
     if (ID_CONSEPROFI !== 61) {
-      console.log('⚠️ Usuário não é da Odontologia (ID_CONSEPROFI =', ID_CONSEPROFI, ')');
+      console.log('⚠️ Acesso negado: não é da Odontologia (ID_CONSEPROFI =', ID_CONSEPROFI, ')');
       return res.status(403).json({ error: 'Acesso restrito aos profissionais de Odontologia' });
     }
 
     const senhaValida = await bcrypt.compare(senha, SENHAUSUA);
-    console.log('🔒 Comparando senha...');
-    console.log('Senha enviada:', senha);
-    console.log('Hash armazenado:', SENHAUSUA);
-    console.log('Senha confere?', senhaValida);
 
     if (!senhaValida) {
       console.log('❌ Senha incorreta');
