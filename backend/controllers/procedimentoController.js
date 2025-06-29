@@ -212,7 +212,8 @@ const listarEspecProc = async (req, res) => {
       FROM ESPECPROCED ep
       JOIN ESPECIALIDADE e ON ep.ID_ESPEC = e.IDESPEC
       JOIN PROCEDIMENTO p ON ep.ID_PROCED = p.IDPROCED
-	    WHERE ep.ID_ESPEC = 4;
+	    WHERE ep.ID_ESPEC = 4
+      ORDER BY p.DESCRPROC ASC
     `);
 
     res.json(rows);
