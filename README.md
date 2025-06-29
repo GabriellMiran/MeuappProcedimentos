@@ -1,133 +1,108 @@
-# 📲 Soliodonto - Sistema de Procedimentos Odontológicos
+# 🦷 Soliodonto - Sistema Odontológico Acadêmico
 
-**Soliodonto** é um aplicativo móvel desenvolvido com **React Native + Expo**, com foco em estudantes e supervisores da área de odontologia da instituição **Fasiclin/Fasipe**. O sistema permite o cadastro, consulta e validação de procedimentos clínicos, com suporte ao modo offline e sincronização automática com o backend.
+Sistema completo de solicitação, aprovação e controle de procedimentos odontológicos, desenvolvido como projeto acadêmico na FASICLIN com tecnologias modernas como Node.js, React Native (Expo) e MySQL.
 
----
+## 🚀 Tecnologias Utilizadas
 
-## 🔧 Tecnologias Utilizadas
+- **Backend**: Node.js, Express, MySQL (sem Sequelize), bcrypt
+- **Frontend**: React Native com Expo + TypeScript, AsyncStorage, Axios, SecureStore
+- **Banco de Dados**: MySQL
+- **Ambiente de Deploy**: Ubuntu Server com Systemd + PM2 ou Node direto
 
-### 📱 Mobile (React Native + Expo)
-- React Native
-- Expo SDK
-- Axios
-- AsyncStorage
-- NetInfo
-- React Navigation (Drawer + Stack)
-- SecureStore (armazenamento seguro)
-- React Native Paper (UI)
-- TypeScript
+## 🧱 Estrutura de Diretórios
 
-### 🌐 Backend (Node.js + MySQL)
-- Node.js
-- Express.js
-- MySQL2
-- Bcrypt
-- REST API
+```
+soliodonto-app/
+│
+├── backend/
+│   ├── controllers/
+│   ├── models/
+│   ├── routes/
+│   ├── database/
+│   └── index.js
+│
+└── frontend/
+    ├── screens/
+    ├── services/
+    ├── assets/
+    ├── App.tsx
+    ├── DrawerNavigator.tsx
+    ├── app.json
+    └── package.json
+```
 
----
+## ⚙️ Instalação
 
-## ✨ Funcionalidades
-
-### 👨‍⚕️ Aluno
-- Login com CPF e senha
-- Cadastro de procedimentos com validação
-- Salvamento local em caso de falta de conexão
-- Sincronização automática quando a internet volta
-- Visualização dos procedimentos enviados (pendentes, aprovados ou negados)
-
-### 👨‍🏫 Supervisor
-- Listagem dos procedimentos cadastrados por alunos
-- Aprovação ou recusa com motivo
-- Histórico de solicitações
-
----
-
-## 🌐 Suporte Offline
-
-- O app detecta automaticamente quando está offline
-- Os procedimentos são salvos localmente
-- Ao reconectar, os dados são enviados para o servidor
-- Usuários permanecem logados até que optem por sair manualmente
-
----
-
-## 📷 Screenshots
-
-<p float="left">
-  <img src="https://user-images.githubusercontent.com/seu-usuario/login-screen.png" width="250" />
-  <img src="https://user-images.githubusercontent.com/seu-usuario/procedimento-screen.png" width="250" />
-</p>
-
----
-
-## 🚀 Como Executar o Projeto
-
-### 🔌 Backend (Express + MySQL)
+### 🔧 Backend
 
 ```bash
-# Instale as dependências
+cd backend
 npm install
-
-# Configure a conexão com o MySQL em /database/mysql.js
-
-# Inicie o servidor
 node index.js
+# ou com systemd
+sudo systemctl start backend_soliodonto.service
 ```
+
+> Certifique-se de configurar o banco corretamente no arquivo de conexão `database/mysql.js`.
 
 ### 📱 Frontend (Expo)
 
 ```bash
-# Instale as dependências
+cd frontend
 npm install
-
-# Inicie o projeto com Expo
 npx expo start
 ```
 
----
+> Configure o IP da API no arquivo `services/api.ts` com o IP da sua máquina ou servidor.
 
-## 📂 Estrutura de Pastas
+## 🔐 Autenticação
 
+- Login com CPF e senha criptografada (bcrypt)
+- Autenticação persistente com **SecureStore**
+- Login permanece ativo até o usuário clicar em “Sair”
+- Tipos de usuário: `aluno`, `supervisor`
+
+## ✨ Funcionalidades
+
+✅ Login persistente com verificação via API  
+✅ Cadastro offline de procedimentos com sincronização automática  
+✅ Aprovação ou recusa de procedimentos pelo supervisor  
+✅ Busca de nome do paciente pelo ID  
+✅ Tela com histórico dos procedimentos  
+✅ Toasts e alertas com feedback do status das ações  
+✅ Interface intuitiva e institucional com tema da Fasiclin  
+✅ Ícone e splash customizados com logo Fasiclin/Soliodonto  
+✅ Compatível com build para APK (`eas build`)
+
+## 📦 Geração de APK
+
+```bash
+eas build --platform android
 ```
-/MeuAppProcedimentos
-├── assets/               # Imagens e ícones
-├── screens/              # Telas (Login, Cadastro, Aluno, Supervisor)
-├── services/             # API e storage local
-├── navigation/           # Navegação com Drawer e Stack
-├── database/             # Conexão MySQL (backend)
-├── models/               # Models de dados (backend)
-├── controllers/          # Lógica de API (backend)
-├── app.json              # Configuração do app Expo
-└── App.tsx               # Entrada principal do app
+
+> Se usar HTTP, adicione no `app.json`:
+```json
+"plugins": [
+  [
+    "expo-build-properties",
+    {
+      "android": {
+        "usesCleartextTraffic": true
+      }
+    }
+  ]
+]
 ```
 
----
+## 🧠 Considerações
 
-## 🔒 Login
+- `runtimeVersion` deve ser uma string estável, como `"1.1.1"`
+- Backend deve escutar em `0.0.0.0` e estar acessível por IP local
+- A sincronização funciona apenas se o app detectar conexão ativa
+- Arquivos offline são armazenados com AsyncStorage e enviados quando possível
 
-- **Usuário:** CPF cadastrado na base
-- **Senha:** criptografada (bcrypt)
-- **Tipos de usuário:**
-  - `2`: Aluno
-  - `3`: Supervisor
+## 👨‍💻 Autor
 
----
-
-## 📌 Observações
-
-- O sistema só permite login de usuários com vínculo à Odontologia (`ID_CONSEPROFI = 61`)
-- Procedimentos e dados são validados no backend antes de serem salvos
-- Backend permite o uso de IP local para desenvolvimento com `usesCleartextTraffic`
-
----
-
-## 🧠 Autor
-
-Desenvolvido por **Gabriel Henrique Queiroz Amaral Miranda**  
-Projeto acadêmico - FASIPE Cuiabá
-
----
-
-## 📃 Licença
-
-Este projeto é licenciado para fins acadêmicos e educacionais. Para uso institucional, entre em contato.
+Gabriel Henrique Queiroz Amaral Miranda  
+Projeto acadêmico para o curso de Análise e Desenvolvimento de Sistemas  
+Faculdade FASIPE Cuiabá - FASICLIN  
