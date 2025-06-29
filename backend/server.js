@@ -13,6 +13,6 @@ app.use(express.json());
 app.use('/api', procedimentoRoutes);
 app.use('/api', usuarioRoutes);
 
-app.listen(5151, '0.0.0.0', () => {
+app.listen(3000, '0.0.0.0', () => {
   console.log('Servidor rodando em 0.0.0.0:3000');
 });
